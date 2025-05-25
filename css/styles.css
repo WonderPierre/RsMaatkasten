@@ -226,7 +226,7 @@ h3 {
 
 .over-ons-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: var(--spacing-lg);
     align-items: start;
 }
@@ -255,14 +255,24 @@ h3 {
     line-height: 1.6;
 }
 
+.subtitle {
+    color: var(--color-primary);
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-md);
+    font-family: 'Playfair Display', serif;
+}
+
+.education-achievement {
+    margin-top: var(--spacing-lg);
+}
+
 .achievement {
-    margin-top: var(--spacing-md);
     display: flex;
-    align-items: center;
     gap: var(--spacing-md);
-    padding: 1rem;
+    padding: 2rem;
     background-color: var(--color-background);
     border-radius: 8px;
+    align-items: center;
 }
 
 .certificate-image {
@@ -271,14 +281,31 @@ h3 {
     border-radius: 4px;
 }
 
-.achievement-text {
-    font-weight: 600;
-    color: var(--color-primary);
-    margin: 0;
+.achievement-content {
+    flex: 1;
+}
 
+.achievement-content h4 {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
 }
 
 .usps {
+    background-color: var(--color-background);
+    padding: var(--spacing-lg);
+    border-radius: 8px;
+}
+
+.usps h3 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-primary);
+    font-size: 1.8rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.usp-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--spacing-md);
@@ -287,7 +314,7 @@ h3 {
 .usp-item {
     text-align: center;
     padding: var(--spacing-md);
-    background-color: var(--color-background);
+    background-color: var(--color-white);
     border-radius: 8px;
     transition: transform 0.3s ease;
 }
@@ -300,6 +327,12 @@ h3 {
     width: 64px;
     height: 64px;
     margin-bottom: var(--spacing-sm);
+}
+
+.usp-item h4 {
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
 }
 
 /* Portfolio Section */
