@@ -750,7 +750,7 @@ h3 {
 .lightbox-next {
     right: 2rem;
     top: 50%;
-    transform: translateY(-50%);
+    transform: scale(1.5);
 }
 
 /* High-DPI schermen */
