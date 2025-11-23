@@ -38,42 +38,123 @@ let lastScroll = 0;
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     
-    if (currentScroll > lastScroll && currentScroll > 100) {
-        // Scrolling down & past the header
+    // Altijd header tonen als we bovenaan zijn (binnen eerste 100px)
+    if (currentScroll <= 100) {
+        header.style.transform = 'translateY(0)';
+    } else if (currentScroll > lastScroll && currentScroll > 100) {
+        // Scrolling down & past the header - verberg header
         header.style.transform = 'translateY(-100%)';
-    } else {
-        // Scrolling up or at the top
+    } else if (currentScroll < lastScroll) {
+        // Scrolling up - toon header
         header.style.transform = 'translateY(0)';
     }
     
     lastScroll = currentScroll;
 });
 
-// Contact form handling
+// Contact form handling with PHP backend
 const contactForm = document.getElementById('contactForm');
+const submitButton = contactForm ? contactForm.querySelector('button[type="submit"]') : null;
 
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Get form data
-        const formData = new FormData(contactForm);
-        const data = Object.fromEntries(formData);
-        
-        try {
-            // Here you would typically send the data to your backend
-            // For now, we'll just log it and show a success message
-            console.log('Form data:', data);
+        // Disable submit button and show loading state
+        if (submitButton) {
+            const originalText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Verzenden...';
             
-            // Show success message
-            alert('Bedankt voor uw bericht! We nemen zo spoedig mogelijk contact met u op.');
-            contactForm.reset();
-            
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            alert('Er is een fout opgetreden. Probeer het later opnieuw of neem telefonisch contact op.');
+            try {
+                // Get form data
+                const formData = new FormData(contactForm);
+                const data = {
+                    naam: formData.get('naam'),
+                    email: formData.get('email'),
+                    telefoon: formData.get('telefoon') || '',
+                    bericht: formData.get('bericht')
+                };
+                
+                // Send to PHP backend
+                const response = await fetch('send-email.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Show success message
+                    showFormMessage('success', result.message || 'Bedankt voor uw bericht! We nemen zo spoedig mogelijk contact met u op.');
+                    contactForm.reset();
+                } else {
+                    // Show error message
+                    showFormMessage('error', result.message || 'Er is een fout opgetreden. Probeer het later opnieuw of neem telefonisch contact op.');
+                }
+                
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                
+                // Check if it's a network error or server error
+                let errorMessage = 'Er is een fout opgetreden bij het verzenden. ';
+                
+                if (error.message.includes('fetch')) {
+                    errorMessage += 'Kan geen verbinding maken met de server. Controleer je internetverbinding.';
+                } else if (error.message.includes('JSON')) {
+                    errorMessage += 'Server antwoord is ongeldig.';
+                } else {
+                    errorMessage += 'Probeer het later opnieuw of neem telefonisch contact op via info@rsmaatkasten.be';
+                }
+                
+                showFormMessage('error', errorMessage);
+            } finally {
+                // Re-enable submit button
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalText;
+                }
+            }
         }
     });
+}
+
+// Function to show form messages
+function showFormMessage(type, message) {
+    // Remove existing messages
+    const existingMessage = document.querySelector('.form-message');
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+    
+    // Create message element
+    const messageEl = document.createElement('div');
+    messageEl.className = `form-message form-message-${type}`;
+    messageEl.textContent = message;
+    
+    // Insert message before submit button
+    if (contactForm && submitButton) {
+        contactForm.insertBefore(messageEl, submitButton);
+        
+        // Scroll to message
+        messageEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        // Auto-remove after 8 seconds for success, 10 seconds for error
+        const timeout = type === 'success' ? 8000 : 10000;
+        setTimeout(() => {
+            if (messageEl.parentNode) {
+                messageEl.style.opacity = '0';
+                messageEl.style.transition = 'opacity 0.3s ease-out';
+                setTimeout(() => messageEl.remove(), 300);
+            }
+        }, timeout);
+    } else {
+        // Fallback to alert if form structure is different
+        alert(message);
+    }
 }
 
 // Enhanced Portfolio lightbox functionality

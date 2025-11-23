@@ -1,0 +1,20 @@
+# Dependencies
+/vendor/
+/PHPMailer/
+
+# Config files (bevatten gevoelige informatie)
+email-config.php
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+

@@ -1,0 +1,13 @@
+{
+    "name": "rsmaatkasten/contact-form",
+    "description": "Contact formulier voor RS Maatkasten",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "RSMaatkasten\\": "src/"
+        }
+    }
+}
+

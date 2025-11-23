@@ -1,36 +1,36 @@
 # RS Maatkasten Website
 
-Een professionele website voor RS Maatkasten, gebouwd met moderne web technologieën.
+Een professionele website voor RS Maatkasten, gebouwd met moderne web technologieën. Klaar voor deployment op Combell hosting.
 
 ## 📋 Functionaliteiten
 
-- Responsief ontwerp voor alle schermformaten
-- Moderne, professionele uitstraling
-- Optimaal gestructureerde secties:
-  - Hero sectie met sterke eerste indruk
-  - Over ons met USPs
-  - Portfolio galerij
-  - Waarom kiezen voor RS Maatkasten
-  - Contact formulier
-- Smooth scroll navigatie
-- Geoptimaliseerd voor SEO
-- Contactformulier functionaliteit
+- ✅ Responsief ontwerp voor alle schermformaten
+- ✅ Moderne, professionele uitstraling
+- ✅ Portfolio galerij met lightbox en filters
+- ✅ Contactformulier met PHPMailer
+- ✅ Smooth scroll navigatie
+- ✅ Mobiel menu
+- ✅ Geoptimaliseerd voor SEO
+- ✅ SSL-ready en beveiligd
 
-## 🚀 Aan de slag
+## 🚀 Deployment op Combell
+
+**Voor volledige deployment instructies, zie:** [`DEPLOYMENT_COMBELL.md`](DEPLOYMENT_COMBELL.md)
+
+### Snelle Start
+
+1. **Upload bestanden** naar `public_html` via FTP of cPanel
+2. **Installeer PHPMailer** via Composer of handmatig
+3. **Configureer** `email-config.php` met je SMTP instellingen
+4. **Activeer SSL** certificaat in cPanel
+5. **Test** het contactformulier
 
 ### Vereisten
 
-- Een web server of hosting service
-- Basis kennis van HTML, CSS en JavaScript voor aanpassingen
-
-### Installatie
-
-1. Download of clone de repository
-2. Upload de bestanden naar je webserver
-3. Pas de volgende bestanden aan met je eigen content:
-   - `index.html`: Teksten en content
-   - `images/`: Voeg je eigen afbeeldingen toe
-   - `css/styles.css`: Pas kleuren en stijlen aan indien gewenst
+- PHP 7.4+ (8.0+ aanbevolen)
+- Composer (voor PHPMailer) of handmatige installatie
+- SMTP toegang (Gmail, Combell mail, of andere provider)
+- SSL certificaat (meestal gratis via Let's Encrypt)
 
 ### Aanpassen van de Content
 
@@ -48,7 +48,10 @@ Een professionele website voor RS Maatkasten, gebouwd met moderne web technologi
 
 #### Contact Informatie
 1. Pas de contactgegevens aan in `index.html`
-2. Configureer het contactformulier met je eigen backend/email service
+2. Configureer het contactformulier:
+   - **Lokaal testen:** Zie `LOCALE_TEST_INSTRUCTIES.md`
+   - **Productie (Combell):** Zie `DEPLOYMENT_COMBELL.md`
+   - Configureer `email-config.php` met je SMTP instellingen
 
 ## 📱 Responsive Design
 
@@ -77,35 +80,74 @@ De belangrijkste kleuren kunnen worden aangepast in `css/styles.css`:
 
 ```
 rs-maatkasten/
-├── index.html
+├── index.html              # Hoofdpagina
+├── send-email.php          # Contactformulier handler (PHPMailer)
+├── email-config.php        # E-mail configuratie (NIET committen!)
+├── email-config.example.php # Voorbeeld configuratie
+├── composer.json            # PHPMailer dependency
+├── .htaccess               # Apache configuratie (beveiliging, caching)
 ├── css/
-│   └── styles.css
+│   └── styles.css          # Alle styling
 ├── js/
-│   └── main.js
+│   └── main.js             # JavaScript functionaliteit
 ├── images/
-│   ├── logo.png
-│   ├── hero-bg.jpg
-│   ├── icons/
-│   └── portfolio/
-└── README.md
+│   ├── icons/              # SVG iconen
+│   ├── portfolio/          # Portfolio afbeeldingen
+│   └── overMij/            # Over mij afbeeldingen
+├── DEPLOYMENT_COMBELL.md    # Deployment instructies
+├── LOCALE_TEST_INSTRUCTIES.md # Lokale test instructies
+└── README.md               # Dit bestand
 ```
+
+**Belangrijk:** `email-config.php` staat in `.gitignore` en bevat gevoelige informatie!
 
 ## 🔧 Onderhoud
 
 ### Aanbevolen Updates
 
-- Houd de portfolio sectie up-to-date met nieuwe projecten
-- Controleer regelmatig of contactgegevens nog actueel zijn
-- Test het contactformulier periodiek
-- Optimaliseer afbeeldingen voor snelle laadtijden
+- ✅ Houd de portfolio sectie up-to-date met nieuwe projecten
+- ✅ Controleer regelmatig of contactgegevens nog actueel zijn
+- ✅ Test het contactformulier maandelijks
+- ✅ Optimaliseer nieuwe afbeeldingen voor web gebruik
+- ✅ Maak regelmatig backups via cPanel
 
 ### Performance Tips
 
-- Optimaliseer afbeeldingen voor web gebruik
-- Gebruik moderne afbeeldingsformaten (WebP met fallback)
-- Minimaliseer CSS en JavaScript bestanden voor productie
+- ✅ Afbeeldingen zijn al geoptimaliseerd
+- ✅ Browser caching is ingesteld via `.htaccess`
+- ✅ GZIP compressie is actief
+- ✅ Beveiligingsheaders zijn geconfigureerd
 
-## 📝 Contact
+### Beveiliging
 
-Voor vragen of ondersteuning bij het aanpassen van de website, neem contact op via:
-[Contact informatie invullen] 
+- ✅ `email-config.php` is beveiligd tegen directe toegang
+- ✅ PHP errors zijn uitgeschakeld voor bezoekers
+- ✅ Input validatie en sanitization in `send-email.php`
+- ✅ XSS bescherming geïmplementeerd
+
+## 📚 Documentatie
+
+- **Deployment:** [`DEPLOYMENT_COMBELL.md`](DEPLOYMENT_COMBELL.md) - Stap-voor-stap instructies voor Combell
+- **Lokaal Testen:** [`LOCALE_TEST_INSTRUCTIES.md`](LOCALE_TEST_INSTRUCTIES.md) - Testen met MailHog/Mailtrap
+- **Hosting Advies:** [`HOSTING_ADVIES.md`](HOSTING_ADVIES.md) - Vergelijking hosting providers
+
+## 🐛 Troubleshooting
+
+**Contactformulier werkt niet?**
+- Controleer `email-config.php` SMTP instellingen
+- Test met Gmail SMTP voor betrouwbaarheid
+- Controleer PHP error logs in cPanel
+- Zie `DEPLOYMENT_COMBELL.md` voor details
+
+**Website laadt niet?**
+- Controleer of `index.html` in `public_html` staat
+- Controleer bestandsrechten (644 voor bestanden, 755 voor mappen)
+- Controleer SSL certificaat status
+
+## 📝 Licentie
+
+Deze website is gemaakt voor RS Maatkasten. Alle rechten voorbehouden.
+
+---
+
+**Status:** ✅ Klaar voor productie deployment op Combell 
