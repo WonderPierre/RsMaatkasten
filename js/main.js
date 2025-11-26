@@ -37,7 +37,7 @@ let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
-    
+
     // Altijd header tonen als we bovenaan zijn (binnen eerste 100px)
     if (currentScroll <= 100) {
         header.style.transform = 'translateY(0)';
@@ -48,7 +48,7 @@ window.addEventListener('scroll', () => {
         // Scrolling up - toon header
         header.style.transform = 'translateY(0)';
     }
-    
+
     lastScroll = currentScroll;
 });
 
@@ -59,13 +59,13 @@ const submitButton = contactForm ? contactForm.querySelector('button[type="submi
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         // Disable submit button and show loading state
         if (submitButton) {
             const originalText = submitButton.textContent;
             submitButton.disabled = true;
             submitButton.textContent = 'Verzenden...';
-            
+
             try {
                 // Get form data
                 const formData = new FormData(contactForm);
@@ -75,7 +75,7 @@ if (contactForm) {
                     telefoon: formData.get('telefoon') || '',
                     bericht: formData.get('bericht')
                 };
-                
+
                 // Send to PHP backend
                 const response = await fetch('send-email.php', {
                     method: 'POST',
@@ -84,9 +84,9 @@ if (contactForm) {
                     },
                     body: JSON.stringify(data)
                 });
-                
+
                 const result = await response.json();
-                
+
                 if (result.success) {
                     // Show success message
                     showFormMessage('success', result.message || 'Bedankt voor uw bericht! We nemen zo spoedig mogelijk contact met u op.');
@@ -95,13 +95,13 @@ if (contactForm) {
                     // Show error message
                     showFormMessage('error', result.message || 'Er is een fout opgetreden. Probeer het later opnieuw of neem telefonisch contact op.');
                 }
-                
+
             } catch (error) {
                 console.error('Error submitting form:', error);
-                
+
                 // Check if it's a network error or server error
                 let errorMessage = 'Er is een fout opgetreden bij het verzenden. ';
-                
+
                 if (error.message.includes('fetch')) {
                     errorMessage += 'Kan geen verbinding maken met de server. Controleer je internetverbinding.';
                 } else if (error.message.includes('JSON')) {
@@ -109,7 +109,7 @@ if (contactForm) {
                 } else {
                     errorMessage += 'Probeer het later opnieuw of neem telefonisch contact op via info@rsmaatkasten.be';
                 }
-                
+
                 showFormMessage('error', errorMessage);
             } finally {
                 // Re-enable submit button
@@ -129,19 +129,19 @@ function showFormMessage(type, message) {
     if (existingMessage) {
         existingMessage.remove();
     }
-    
+
     // Create message element
     const messageEl = document.createElement('div');
     messageEl.className = `form-message form-message-${type}`;
     messageEl.textContent = message;
-    
+
     // Insert message before submit button
     if (contactForm && submitButton) {
         contactForm.insertBefore(messageEl, submitButton);
-        
+
         // Scroll to message
         messageEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        
+
         // Auto-remove after 8 seconds for success, 10 seconds for error
         const timeout = type === 'success' ? 8000 : 10000;
         setTimeout(() => {
@@ -239,7 +239,7 @@ document.querySelector('.lightbox-next').addEventListener('click', (e) => {
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('active')) return;
-    
+
     switch (e.key) {
         case 'Escape':
             closeLightbox();
@@ -256,11 +256,11 @@ document.addEventListener('keydown', (e) => {
 // Add animation on scroll
 const animateOnScroll = () => {
     const elements = document.querySelectorAll('.fade-in');
-    
+
     elements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
         const elementBottom = element.getBoundingClientRect().bottom;
-        
+
         if (elementTop < window.innerHeight && elementBottom > 0) {
             element.classList.add('visible');
         }
@@ -280,9 +280,9 @@ filterButtons.forEach(button => {
         filterButtons.forEach(btn => btn.classList.remove('active'));
         // Add active class to clicked button
         button.classList.add('active');
-        
+
         const filterValue = button.getAttribute('data-filter');
-        
+
         portfolioItems.forEach(item => {
             if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
                 item.classList.remove('hidden');
