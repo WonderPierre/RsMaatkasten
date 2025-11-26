@@ -52,6 +52,16 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 });
 
+//check if we are past hero page to change colors
+function checkScroll() {
+    if (window.scrollY > window.innerHeight - 100) { // -100 for a smooth transition slightly before the end
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+}
+
+window.addEventListener('scroll', checkScroll);
 // Contact form handling with PHP backend
 const contactForm = document.getElementById('contactForm');
 const submitButton = contactForm ? contactForm.querySelector('button[type="submit"]') : null;

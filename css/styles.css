@@ -154,6 +154,14 @@ h3 {
     align-items: center;
 }
 
+.header.scrolled .nav a {
+    color: var(--color-text);
+}
+
+header.scrolled .logo h1 {
+    color: var(--color-text);
+}
+
 .logo {
     display: flex;
     gap: .5rem;
@@ -478,19 +486,6 @@ h3 {
     background-color: var(--color-white);
 }
 
-.voordelen-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-md);
-}
-
-.voordeel-item {
-    padding: var(--spacing-md);
-    background-color: var(--color-background);
-    border-radius: 8px;
-    text-align: center;
-}
-
 /* Contact Section */
 .contact {
     padding: var(--spacing-lg) 0;
@@ -525,6 +520,21 @@ h3 {
 .contact-info a {
     color: var(--color-white);
     text-decoration: none;
+}
+
+.contact .container h2 {
+    margin-bottom: 1rem
+}
+
+#contactForm .btn {
+    background-color: var(--color-primary-dark);
+}
+
+#contactForm .btn:hover {
+    background-color: var(--color-background);
+    color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    cursor: pointer;
 }
 
 .form-group {
@@ -578,6 +588,10 @@ h3 {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
+}
+
+.verstuur {
+    background-color: var(--color-primary-dark);
 }
 
 @keyframes slideIn {
